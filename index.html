@@ -10,7 +10,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
-    <!--Project specific css -->
+    <!-- Project specific css -->
     <link rel="stylesheet" href="assets/css/style.css" type="text/css">
 
 </head>
@@ -32,7 +32,8 @@
 
         <div class="row">
             <div class="col-xs-12 offset-2 col-sm-2 text-center">
-                <img src="assets/images/flags-states/alabama.png" width="100%" height="auto" alt="USA state map">
+                <div id="result"></div>
+                <div id="result-img"></div>
             </div>
 
             <div class="col-xs-12 col-sm-6 text-center">
@@ -44,11 +45,17 @@
                 <p>NUMBER OF GUESSES REMAINING</p>
                 <p id="guess-remain"></p>
                 <p>LETTER ALREADY GUESSED</p>
-                <p id="guessed-word"></p>
+                <p id="guessed-letters"></p>
             </div>
 
         </div>
 
     </div>
+
+
+    <!-- Project javascript -->
+    <script src="assets/javascript/game.js"></script>
+
 </body>
+
 </html>
