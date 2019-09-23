@@ -1,9 +1,20 @@
 
 var gameStarted = false;
 var winCount = 0;
+var words = ["alabama", "alaska", "arizona", "arkansas", "california", "colorado",
+             "connecticut", "delaware", "florida", "georgia", "hawaii", "idaho",
+             "illinois", "indiana", "iowa", "kansas", "kentucky", "louisiana",
+             "maine", "maryland", "massachusetts", "michigan", "minnesota",
+             "mississippi", "missouri", "montana", "nebraska", "nevada", "new hampshire",
+             "new jersey", "new mexico", "new york", "north carolina", "north dakota", "ohio",
+             "oklahoma", "oregon", "pennsylvania", "rhodeisland", "south carolina",
+             "south dakota", "tennessee", "texas", "utah", "vermont", "virginia",
+             "washington", "west virginia", "wisconsin", "wyoming"];
 
 var hangman = {
 
+    targetWord: "",
+    currentWord: "",
     guessedLetters: [],
     remainGuesses: 15,
     win: 0,
@@ -29,8 +40,14 @@ var hangman = {
         this.guessedLetters.length = 0;
         this.remainGuesses = 15;
 
+        var randomNum = Math.floor(Math.random() * 51);
+        targetWord = words[randomNum];
+        console.log(targetWord);
+
+        currentWord = new Array(targetWord.length + 1).join('_')
+
         document.getElementById("win-count").innerHTML = winCount;
-        document.getElementById("current-word").innerHTML = "";
+        document.getElementById("current-word").innerHTML = currentWord;
         document.getElementById("guess-remain").innerHTML = this.remainGuesses;
         document.getElementById("guessed-letters").innerHTML = "";
 
@@ -42,7 +59,6 @@ window.onload = function() {
 
         // Capture the key user pressed
         var userGuess = event.key;
-
 
         if (gameStarted === true) {
             hangman.play(userGuess);
