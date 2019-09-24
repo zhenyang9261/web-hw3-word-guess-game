@@ -71,7 +71,7 @@ var hangman = {
                 if (this.remainGuesses === 0) {
 
                     // Display "You lost" and set style
-                    document.getElementById("result").innerHTML = "SORRY, YOU LOST. ";
+                    document.getElementById("result").innerHTML = "SORRY, YOU LOST.  &#x1F626";
                     document.getElementById("result").setAttribute("class", "result-lose");
 
                     // Display "PRESS ANY KEY TO START A NEW GAME"
@@ -108,7 +108,7 @@ var hangman = {
                 if (this.currentWord === this.targetWord) {
 
                     // Display "You won", and set the style
-                    document.getElementById("result").innerHTML = "CONGRATULATIONS! YOU WON!  ";
+                    document.getElementById("result").innerHTML = "CONGRATULATIONS! YOU WON!  &#x1F603";
                     document.getElementById("result").setAttribute("class", "result-win");
 
                     // Display "PRESS ANY KEY TO START A NEW GAME"
@@ -161,8 +161,11 @@ var hangman = {
         document.getElementById("current-word").innerHTML = this.currentWord;
         document.getElementById("guess-remain").innerHTML = this.remainGuesses;
         document.getElementById("guessed-letters").innerHTML = "";
-        document.getElementById("result-img").innerHTML = '';
-        document.getElementById("result").innerHTML = '';
+
+        document.getElementById("result").innerHTML = "GOOD LUCK!"
+        document.getElementById("result").setAttribute("class", "result-luck");
+        document.getElementById("notice").innerHTML = "";
+
         document.getElementById("result-img").innerHTML = '<img src="assets/images/usa-map.png" width="100%" height="auto" alt="USA map">';
 
         // Stop playing the music
