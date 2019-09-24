@@ -50,16 +50,11 @@ var hangman = {
     play: function(key) {
 
         var inGuessLetter = this.checkLetter(key, this.guessedLetters);
+        var inCurrentWord = this.checkLetter(key, this.currentWord);
         var inTargetWord = this.checkLetter(key, this.targetWord);
 
-        // If the letter is not already guessed
-        if (inGuessLetter.length === 0) {
-
-            // Add the letter in the guessedLetters array
-            this.guessedLetters.push(key);
-
-            // Replace the guessed letters in HTML
-            document.getElementById("guessed-letters").innerHTML = this.guessedLetters.join('');
+        // If the letter is not already guessed or already in the partially guessed word
+        if (inGuessLetter.length === 0 && inCurrentWord.length === 0) {
 
             // If the letter is not in the target word
             if (inTargetWord.length === 0) {
@@ -86,6 +81,12 @@ var hangman = {
                 
                 // Replace remain guess counter in HTML
                 document.getElementById("guess-remain").innerHTML = this.remainGuesses;
+
+                // Add the letter in the guessedLetters array
+                this.guessedLetters.push(key);
+
+                // Replace the guessed letters in HTML
+                document.getElementById("guessed-letters").innerHTML = this.guessedLetters.join('');
             }
             // If the letter is in the target word
             else {
@@ -156,7 +157,7 @@ var hangman = {
         // Reset current word to underlines 
         this.currentWord = new Array(this.targetWord.length + 1).join('_')
 
-        // Set HTML element content
+        // Reset HTML element content
         document.getElementById("win-count").innerHTML = winCount;
         document.getElementById("current-word").innerHTML = this.currentWord;
         document.getElementById("guess-remain").innerHTML = this.remainGuesses;
