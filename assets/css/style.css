@@ -4,10 +4,24 @@
 }
 
 .word-style {
-    letter-spacing: 1.3rem;
+    letter-spacing: 1.2rem;
 }
 
 .result-img {
     width: 100%;
     height: auto;
+}
+
+.result-win {
+    font-size: 1.5rem;
+    color: red;
+}
+
+.result-lose {
+    font-size: 1rem;
+    color: blue;
+}
+
+.offset-sm-right-2 {
+    margin-right: 16.66666667%;
 }

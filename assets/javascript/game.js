@@ -70,8 +70,11 @@ var hangman = {
                 // Remaing guess count is 0
                 if (this.remainGuesses === 0) {
 
-                    // Display "You lost" and "PRESS ANY KEY TO START"
-                    document.getElementById("result").innerHTML = "SORRY, YOU LOST.";
+                    // Display "You lost" and set style
+                    document.getElementById("result").innerHTML = "SORRY, YOU LOST. ";
+                    document.getElementById("result").setAttribute("class", "result-lose");
+
+                    // Display "PRESS ANY KEY TO START A NEW GAME"
                     document.getElementById("notice").innerHTML = "PRESS ANY KEY TO START A NEW GAME";
                                     
                     // Play "lose" music
@@ -104,9 +107,14 @@ var hangman = {
                 // If the currentWord equals to targetWord
                 if (this.currentWord === this.targetWord) {
 
-                    // Display "You won"
-                    document.getElementById("result").innerHTML = "CONGRATULATIONS! YOU WON!";
+                    // Display "You won", and set the style
+                    document.getElementById("result").innerHTML = "CONGRATULATIONS! YOU WON!  ";
+                    document.getElementById("result").setAttribute("class", "result-win");
+
+                    // Display "PRESS ANY KEY TO START A NEW GAME"
                     document.getElementById("notice").innerHTML = "PRESS ANY KEY TO START A NEW GAME";
+
+                    // Play "win" music
                     this.audioElementWin.play();
 
                     // Display state flag
