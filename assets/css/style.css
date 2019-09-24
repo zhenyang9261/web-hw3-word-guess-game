@@ -1,0 +1,13 @@
+
+.hangman-row {
+    margin-top: 1.5rem;
+}
+
+.word-style {
+    letter-spacing: 1.3rem;
+}
+
+.result-img {
+    width: 100%;
+    height: auto;
+}

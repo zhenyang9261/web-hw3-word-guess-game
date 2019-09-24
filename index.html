@@ -19,35 +19,43 @@
     <div class="container">
 
         <div class="row">
-            <div class="col-xs-12 col-sm-8 offset-2 text-center">
+            <div class="col-xs-12 col-sm-8 offset-sm-2 text-center">
                 <h1>HANGMAN</h1>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-8 offset-2">
-                <img src="assets/images/usa-map.png" width="100%" height="auto" alt="USA map">
+        <div class="row hangman-row">
+            <div class="col-xs-12 col-sm-6 offset-sm-3">
+                <div id="result-img" class="flag-img">
+                    <img src="assets/images/usa-map.png" width="100%" height="auto" alt="usa map">
+                </div>
+
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12 offset-2 col-sm-2 text-center">
-                <div id="result"></div>
-                <div id="result-img"></div>
+        <div class="row hangman-row">
+            <div class="col-xs-12 col-sm-10 offset-sm-1 text-center">
+                <div id="result">GOOD LUCK!</div>
             </div>
+        </div>
 
-            <div class="col-xs-12 col-sm-6 text-center">
-                <p>PRESS ANY KEY TO GET STATED</p>
+        <div class="row hangman-row">
+            <div class="col-xs-12 col-sm-10 offset-sm-1 text-center">
+                <div id="notice">PRESS ANY KEY TO START</div>
+            </div>
+        </div>
+
+        <div class="row hangman-row">
+            <div class="col-xs-12 col-sm-10 offset-sm-1 text-center">
                 <p>WINS</p>
                 <p id="win-count"></p>
                 <p>CURRENT WORD</p>
-                <p id="current-word"></p>
+                <p id="current-word" class="word-style"></p>
                 <p>NUMBER OF GUESSES REMAINING</p>
                 <p id="guess-remain"></p>
                 <p>LETTER ALREADY GUESSED</p>
-                <p id="guessed-letters"></p>
+                <p id="guessed-letters" class="word-style"></p>
             </div>
-
         </div>
 
     </div>

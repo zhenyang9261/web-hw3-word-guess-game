@@ -23,6 +23,15 @@ var hangman = {
 
     // Check the position(s) of a letter in a word or array
     // If the letter is not in the word or array, the returned array will be empty
+    /*
+     * Function: checkLetter
+     * Input param 1: letter to check
+     * Input param 2: string or array
+     * Output: array that contains the position(s) of the letter in the input string or array
+     *         array will be empty if the letter is not in the string or array
+     *
+     * Hangman game logic in this function
+     */
     checkLetter: function(letter, word) {
         var indices = [];
         for(var i=0; i<word.length; i++) {
@@ -32,9 +41,14 @@ var hangman = {
         return indices;
     },
 
+    /*
+     * Function: play
+     * Input param: the key user pressed
+     *
+     * Hangman game logic in this function
+     */
     play: function(key) {
 
-        key = key.toLowerCase();
         var inGuessLetter = this.checkLetter(key, this.guessedLetters);
         var inTargetWord = this.checkLetter(key, this.targetWord);
 
@@ -45,7 +59,7 @@ var hangman = {
             this.guessedLetters.push(key);
 
             // Replace the guessed letters in HTML
-            document.getElementById("guessed-letter").innerHTML = this.guessedLetters.join('');
+            document.getElementById("guessed-letters").innerHTML = this.guessedLetters.join('');
 
             // If the letter is not in the target word
             if (inTargetWord.length === 0) {
@@ -56,9 +70,10 @@ var hangman = {
                 // Remaing guess count is 0
                 if (this.remainGuesses === 0) {
 
-                    // Display "You lost"
-                    document.getElementById("result").innerHTML = "Sorry. You Lost. <br> Press any key to start a new game";
-                    
+                    // Display "You lost" and "PRESS ANY KEY TO START"
+                    document.getElementById("result").innerHTML = "SORRY, YOU LOST.";
+                    document.getElementById("notice").innerHTML = "PRESS ANY KEY TO START A NEW GAME";
+                                    
                     // Play "lose" music
                     this.audioElementLose.play();
 
@@ -90,7 +105,8 @@ var hangman = {
                 if (this.currentWord === this.targetWord) {
 
                     // Display "You won"
-                    document.getElementById("result").innerHTML = "Congratuations! You won! <br> Press any key to start a new game";
+                    document.getElementById("result").innerHTML = "CONGRATULATIONS! YOU WON!";
+                    document.getElementById("notice").innerHTML = "PRESS ANY KEY TO START A NEW GAME";
                     this.audioElementWin.play();
 
                     // Display state flag
@@ -109,8 +125,11 @@ var hangman = {
         }
     },
 
-    // User is seeing "Please press any key to star". 
-    // Reset variables and empty HTML elements' content
+    /*
+     * Function: reset
+     *
+     * User is seeing "PRESS ANY KEY TO START". Reset variables and empty HTML elements' content.
+     */
     reset: function() {
 
         // Ready to play
@@ -123,7 +142,7 @@ var hangman = {
         this.remainGuesses = 10;
 
         // Get a random word
-        var randomNum = Math.floor(Math.random() * (words.length+1));
+        var randomNum = Math.floor(Math.random() * (words.length));
         this.targetWord = words[randomNum];
 
         // Reset current word to underlines 
@@ -136,6 +155,7 @@ var hangman = {
         document.getElementById("guessed-letters").innerHTML = "";
         document.getElementById("result-img").innerHTML = '';
         document.getElementById("result").innerHTML = '';
+        document.getElementById("result-img").innerHTML = '<img src="assets/images/usa-map.png" width="100%" height="auto" alt="USA map">';
 
         // Stop playing the music
         this.audioElementWin.setAttribute("src", "assets/audio/win.mp3")
@@ -143,7 +163,6 @@ var hangman = {
 
         this.audioElementLose.setAttribute("src", "assets/audio/lose.mp3")
         this.audioElementLose.pause();
-
     }
 }
 
@@ -153,13 +172,16 @@ window.onload = function() {
         // Capture the key user pressed
         var userGuess = event.key;
 
-        // If the game has started, pass the key user pressed to hangman, and play
+        // If the game has started, pass lower case of the key user pressed to hangman, and play
         if (gameStarted === true) {
-            if (userGuess.length != 1 || userGuess < "a" || userGuess > "z") {
-                alert("Please input a valid letter");
+
+            // When user pressed a character key (not function keys such as 'Ctrl', 'Shift'.. )
+            // and the key is a small or capital letter, play
+            if (userGuess.length == 1 && ((userGuess >= "a" && userGuess <= "z") || (userGuess >= "A" && userGuess <= "Z"))) {
+                hangman.play(userGuess.toLowerCase());
             }
             else {
-                hangman.play(userGuess);
+                document.getElementById("notice").innerHTML = "PLEASE PRESS A VALID LETTER";  
             }
         }
         // If the game has not started, reset everything
