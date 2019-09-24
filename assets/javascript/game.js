@@ -18,11 +18,14 @@ var hangman = {
     guessedLetters: [],
     remainGuesses: 10,
     win: 0,
+    audioElementWin: document.createElement("audio"),
+    audioElementLose: document.createElement("audio"),
 
     // Check the position(s) of a letter in a word or array
+    // If the letter is not in the word or array, the returned array will be empty
     checkLetter: function(letter, word) {
         var indices = [];
-        for(var i=0; i<word.length;i++) {
+        for(var i=0; i<word.length; i++) {
             if (word[i] === letter) 
                 indices.push(i);
         }
@@ -30,8 +33,6 @@ var hangman = {
     },
 
     play: function(key) {
-
-        console.log(key);
 
         key = key.toLowerCase();
         var inGuessLetter = this.checkLetter(key, this.guessedLetters);
@@ -44,7 +45,7 @@ var hangman = {
             this.guessedLetters.push(key);
 
             // Replace the guessed letters in HTML
-            document.getElementById("guessed-letters").innerHTML = this.guessedLetters.join('');
+            document.getElementById("guessed-letter").innerHTML = this.guessedLetters.join('');
 
             // If the letter is not in the target word
             if (inTargetWord.length === 0) {
@@ -57,6 +58,9 @@ var hangman = {
 
                     // Display "You lost"
                     document.getElementById("result").innerHTML = "Sorry. You Lost. <br> Press any key to start a new game";
+                    
+                    // Play "lose" music
+                    this.audioElementLose.play();
 
                     // Set gameStarted to false
                     gameStarted = false;
@@ -87,6 +91,7 @@ var hangman = {
 
                     // Display "You won"
                     document.getElementById("result").innerHTML = "Congratuations! You won! <br> Press any key to start a new game";
+                    this.audioElementWin.play();
 
                     // Display state flag
                     document.getElementById("result-img").innerHTML = '<img src="assets/images/flags-states/' + this.targetWord + '.png" width="100%" height="auto" alt="USA state map">';
@@ -104,23 +109,40 @@ var hangman = {
         }
     },
 
+    // User is seeing "Please press any key to star". 
+    // Reset variables and empty HTML elements' content
     reset: function() {
 
+        // Ready to play
         gameStarted = true;
+
+        // Clear guessed letter array
         this.guessedLetters.length = 0;
+
+        // Reset remaining guesses to the original value
         this.remainGuesses = 10;
 
+        // Get a random word
         var randomNum = Math.floor(Math.random() * (words.length+1));
         this.targetWord = words[randomNum];
 
+        // Reset current word to underlines 
         this.currentWord = new Array(this.targetWord.length + 1).join('_')
 
+        // Set HTML element content
         document.getElementById("win-count").innerHTML = winCount;
         document.getElementById("current-word").innerHTML = this.currentWord;
         document.getElementById("guess-remain").innerHTML = this.remainGuesses;
         document.getElementById("guessed-letters").innerHTML = "";
         document.getElementById("result-img").innerHTML = '';
         document.getElementById("result").innerHTML = '';
+
+        // Stop playing the music
+        this.audioElementWin.setAttribute("src", "assets/audio/win.mp3")
+        this.audioElementWin.pause();
+
+        this.audioElementLose.setAttribute("src", "assets/audio/lose.mp3")
+        this.audioElementLose.pause();
 
     }
 }
@@ -131,9 +153,16 @@ window.onload = function() {
         // Capture the key user pressed
         var userGuess = event.key;
 
+        // If the game has started, pass the key user pressed to hangman, and play
         if (gameStarted === true) {
-            hangman.play(userGuess);
+            if (userGuess.length != 1 || userGuess < "a" || userGuess > "z") {
+                alert("Please input a valid letter");
+            }
+            else {
+                hangman.play(userGuess);
+            }
         }
+        // If the game has not started, reset everything
         else {
             hangman.reset();
         }
