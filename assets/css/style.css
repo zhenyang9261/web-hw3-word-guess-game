@@ -22,12 +22,16 @@
 
 .result-win {
     font-size: 1.5rem;
-    color: red;
+    color: green;
 }
 
 .result-lose {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: blue;
+}
+
+.notice {
+    color: red;
 }
 
 .offset-sm-right-2 {

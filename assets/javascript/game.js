@@ -17,7 +17,6 @@ var hangman = {
     currentWord: "",
     guessedLetters: [],
     remainGuesses: 10,
-    win: 0,
     audioElementWin: document.createElement("audio"),
     audioElementLose: document.createElement("audio"),
 
@@ -190,6 +189,7 @@ window.onload = function() {
             // When user pressed a character key (not function keys such as 'Ctrl', 'Shift'.. )
             // and the key is a small or capital letter, play
             if (userGuess.length == 1 && ((userGuess >= "a" && userGuess <= "z") || (userGuess >= "A" && userGuess <= "Z"))) {
+                document.getElementById("notice").innerHTML = ""; 
                 hangman.play(userGuess.toLowerCase());
             }
             else {
