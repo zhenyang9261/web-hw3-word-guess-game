@@ -1,6 +1,11 @@
 
+// Global condition checker to track whether the game has stated
 var gameStarted = false;
+
+// Global counter to track how many games won
 var winCount = 0;
+
+// Words to guess
 var words = ["alabama", "alaska", "arizona", "arkansas", "california", "colorado",
              "connecticut", "delaware", "florida", "georgia", "hawaii", "idaho",
              "illinois", "indiana", "iowa", "kansas", "kentucky", "louisiana",
@@ -11,6 +16,16 @@ var words = ["alabama", "alaska", "arizona", "arkansas", "california", "colorado
              "south_dakota", "tennessee", "texas", "utah", "vermont", "virginia",
              "washington", "west_virginia", "wisconsin", "wyoming"];
 
+// HTML Elements
+var resultImgElem = document.getElementById("result-img");
+var resultElem = document.getElementById("result");
+var noticeElem = document.getElementById("notice");
+var winCountElem = document.getElementById("win-count");
+var currentWordElem = document.getElementById("current-word");
+var remainGuessesElem = document.getElementById("guess-remain");
+var guessedLettersElem = document.getElementById("guessed-letters");
+
+// Hangman game object
 var hangman = {
 
     targetWord: "",
@@ -20,16 +35,14 @@ var hangman = {
     audioElementWin: document.createElement("audio"),
     audioElementLose: document.createElement("audio"),
 
-    // Check the position(s) of a letter in a word or array
-    // If the letter is not in the word or array, the returned array will be empty
     /*
      * Function: checkLetter
      * Input param 1: letter to check
      * Input param 2: string or array
-     * Output: array that contains the position(s) of the letter in the input string or array
+     * Output: array that contains the position(s) of the letter in the input string 
      *         array will be empty if the letter is not in the string or array
      *
-     * Hangman game logic in this function
+     * Check if a letter is in a word or array
      */
     checkLetter: function(letter, word) {
         var indices = [];
@@ -65,11 +78,11 @@ var hangman = {
                 if (this.remainGuesses === 0) {
 
                     // Display "You lost" and set style
-                    document.getElementById("result").innerHTML = "SORRY, YOU LOST.  &#x1F626";
-                    document.getElementById("result").setAttribute("class", "result-lose");
+                    resultElem.innerHTML = "SORRY, YOU LOST.  &#x1F626";
+                    resultElem.setAttribute("class", "result-lose");
 
                     // Display "PRESS ANY KEY TO START A NEW GAME"
-                    document.getElementById("notice").innerHTML = "PRESS ANY KEY TO START A NEW GAME";
+                    noticeElem.innerHTML = "PRESS ANY KEY TO START A NEW GAME";
                                     
                     // Play "lose" music
                     this.audioElementLose.play();
@@ -79,13 +92,13 @@ var hangman = {
                 }
                 
                 // Replace remain guess counter in HTML
-                document.getElementById("guess-remain").innerHTML = this.remainGuesses;
+                remainGuessesElem.innerHTML = this.remainGuesses;
 
                 // Add the letter in the guessedLetters array
                 this.guessedLetters.push(key);
 
                 // Replace the guessed letters in HTML
-                document.getElementById("guessed-letters").innerHTML = this.guessedLetters.join('');
+                guessedLettersElem.innerHTML = this.guessedLetters.join('');
             }
             // If the letter is in the target word
             else {
@@ -102,29 +115,29 @@ var hangman = {
                 }
 
                 // Replace the current word in HTML
-                document.getElementById("current-word").innerHTML = this.currentWord;
+                currentWordElem.innerHTML = this.currentWord;
 
                 // If the currentWord equals to targetWord
                 if (this.currentWord === this.targetWord) {
 
                     // Display "You won", and set the style
-                    document.getElementById("result").innerHTML = "CONGRATULATIONS! YOU WON!  &#x1F603";
-                    document.getElementById("result").setAttribute("class", "result-win");
+                    resultElem.innerHTML = "CONGRATULATIONS! YOU WON!  &#x1F603";
+                    resultElem.setAttribute("class", "result-win");
 
                     // Display "PRESS ANY KEY TO START A NEW GAME"
-                    document.getElementById("notice").innerHTML = "PRESS ANY KEY TO START A NEW GAME";
+                    noticeElem.innerHTML = "PRESS ANY KEY TO START A NEW GAME";
 
                     // Play "win" music
                     this.audioElementWin.play();
 
                     // Display state flag
-                    document.getElementById("result-img").innerHTML = '<img src="assets/images/flags-states/' + this.targetWord + '.png" width="100%" height="auto" alt="USA state map">';
+                    resultImgElem.innerHTML = '<img src="assets/images/flags-states/' + this.targetWord + '.png" width="100%" height="auto" alt="USA state map">';
 
                     // Game win counter increase by 1
                     winCount++;
 
                     // Display new win count in HTML
-                    document.getElementById("win-count").innerHTML = winCount;
+                    winCountElem.innerHTML = winCount;
 
                     // Set gameStarted to false
                     gameStarted = false;
@@ -157,16 +170,16 @@ var hangman = {
         this.currentWord = new Array(this.targetWord.length + 1).join('_')
 
         // Reset HTML element content
-        document.getElementById("win-count").innerHTML = winCount;
-        document.getElementById("current-word").innerHTML = this.currentWord;
-        document.getElementById("guess-remain").innerHTML = this.remainGuesses;
-        document.getElementById("guessed-letters").innerHTML = "";
+        winCountElem.innerHTML = winCount;
+        currentWordElem.innerHTML = this.currentWord;
+        remainGuessesElem.innerHTML = this.remainGuesses;
+        guessedLettersElem.innerHTML = "";
 
-        document.getElementById("result").innerHTML = "GOOD LUCK!"
-        document.getElementById("result").setAttribute("class", "result-luck");
-        document.getElementById("notice").innerHTML = "";
+        resultElem.innerHTML = "GOOD LUCK!"
+        resultElem.setAttribute("class", "result-luck");
+        noticeElem.innerHTML = "";
 
-        document.getElementById("result-img").innerHTML = '<img src="assets/images/usa-map.png" width="100%" height="auto" alt="USA map">';
+        resultImgElem.innerHTML = '<img src="assets/images/usa-map.png" width="100%" height="auto" alt="USA map">';
 
         // Stop playing the music
         this.audioElementWin.setAttribute("src", "assets/audio/win.mp3")
@@ -189,11 +202,11 @@ window.onload = function() {
             // When user pressed a character key (not function keys such as 'Ctrl', 'Shift'.. )
             // and the key is a small or capital letter, play
             if (userGuess.length == 1 && ((userGuess >= "a" && userGuess <= "z") || (userGuess >= "A" && userGuess <= "Z"))) {
-                document.getElementById("notice").innerHTML = ""; 
+                noticeElem.innerHTML = ""; 
                 hangman.play(userGuess.toLowerCase());
             }
             else {
-                document.getElementById("notice").innerHTML = "PLEASE PRESS A VALID LETTER";  
+                noticeElem.innerHTML = "PLEASE PRESS A VALID LETTER";  
             }
         }
         // If the game has not started, reset everything
