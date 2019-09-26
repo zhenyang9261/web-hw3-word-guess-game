@@ -31,7 +31,7 @@ var hangman = {
     targetWord: "",
     currentWord: "",
     guessedLetters: [],
-    remainGuesses: 10,
+    remainGuesses: 8,
     audioElementWin: document.createElement("audio"),
     audioElementLose: document.createElement("audio"),
 
@@ -160,7 +160,7 @@ var hangman = {
         this.guessedLetters.length = 0;
 
         // Reset remaining guesses to the original value
-        this.remainGuesses = 10;
+        this.remainGuesses = 8;
 
         // Get a random word
         var randomNum = Math.floor(Math.random() * (words.length));
